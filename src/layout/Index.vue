@@ -1,11 +1,11 @@
 <template>
   <div class="common-layout">
     <el-container>
-      <el-aside width="50px">
+      <el-aside class="aside">
         Aside
       </el-aside>
-      <el-main>
-
+      <el-main class="main">
+        <router-view/>
       </el-main>
     </el-container>
   </div>
@@ -14,15 +14,22 @@
 import {defineComponent} from 'vue'
 
 export default defineComponent({
-  name: "app"
+  name: "app",
 })
 </script>
 
 
 <style scoped>
 .common-layout{
-  width: 100%;
-  height: 100%;
-  background-color: black;
+  width: 100vh;
+  height: 100vw;
+}
+.common-layout .aside{
+  padding: 1rem;
+  width: 75px;
+}
+.common-layout .main{
+  width: calc(100vw - 15px);
+  height: 100vh;
 }
 </style>

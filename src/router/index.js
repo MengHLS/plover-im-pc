@@ -26,8 +26,14 @@ import layout from '@/layout/Index.vue'
 
 export const constantRoutes = [
     {
-        path: '/',
+        path: '',
         component: layout,
+        children:[
+            {
+                path: '',
+                component: ()=>import('@/layout/conversation/index.vue')
+            }
+        ]
     },
 ]
 
