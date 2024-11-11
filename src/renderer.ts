@@ -30,12 +30,14 @@ import './index.css';
 import {createApp} from "vue"
 import App from './App.vue';
 import { createPinia } from 'pinia'
-import initDb from './db/database'
+import router from "./router";
 
 console.log('👋 This message is being logged by "renderer.ts", included via Vite');
 
-initDb()
 
 const app = createApp(App)
+app.use(router)
 app.mount("#app")
+
 app.use(createPinia())
+
