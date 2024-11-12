@@ -2,7 +2,7 @@
   <div class="common-layout">
     <el-container>
       <el-aside class="aside">
-        Aside
+        <Avatar :name="user.name" :src="user.avatar" :size="43"></Avatar>
       </el-aside>
       <el-main class="main">
         <router-view/>
@@ -10,11 +10,16 @@
     </el-container>
   </div>
 </template>
-<script lang="ts">
-import {defineComponent} from 'vue'
+<script setup lang="ts">
+import {computed} from 'vue'
+import Avatar from "@/components/avatar/index.vue";
+import {useUserStore} from '@/store/modules/user'
 
-export default defineComponent({
-  name: "app",
+
+const userStore = useUserStore();
+const user = computed(()=>{
+  const { id, name, avatar  } = userStore
+  return { id, name, avatar}
 })
 </script>
 

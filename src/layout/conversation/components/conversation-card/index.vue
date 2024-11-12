@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import {defineComponent} from 'vue'
-import Avatar from "@/components/avatar/index.vue";
+import Avatar from '@/components/avatar/index.vue';
 
 
 

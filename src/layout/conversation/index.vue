@@ -1,14 +1,3 @@
-<script lang="ts" setup>
-import ConversationCard from "./components/conversation-card/index.vue";
-
-
-defineOptions({
-  name: 'Conversation',
-})
-
-
-</script>
-
 <template>
   <div class="container">
     <el-container>
@@ -23,6 +12,17 @@ defineOptions({
     </el-container>
   </div>
 </template>
+
+<script lang="ts" setup>
+import ConversationCard from "./components/conversation-card/index.vue";
+
+
+defineOptions({
+  name: 'Conversation',
+})
+
+
+</script>
 
 <style scoped>
 

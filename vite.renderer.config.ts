@@ -21,7 +21,7 @@ export default defineConfig({
         vue(),
     ],
     resolve:{
-        extensions:['.js', '.jsx', '.ts', '.tsx', '.json', '.vue'],
+        extensions:['.js', '.jsx', '.ts', '.tsx', '.json', '.vue','.jpg'],
         alias: {
             // 设置路径
             '~': path.resolve(__dirname, './'),

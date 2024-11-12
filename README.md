@@ -17,5 +17,6 @@ better-sqlite3
 插件
 unplugin-vue-components
 unplugin-auto-import
-
-
+axios
+vue-router
+pinia
