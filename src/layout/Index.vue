@@ -2,7 +2,19 @@
   <div class="common-layout">
     <el-container>
       <el-aside class="aside">
-        <Avatar :name="user.name" :src="user.avatar" :size="43"></Avatar>
+        <div class="center-flex">
+          <Avatar :name="user.name" :src="user.avatar" :size="36"></Avatar>
+        </div>
+        <div class="aside-button center-flex">
+          <el-icon :size="28" color="#c9cacb">
+            <ChatRound/>
+          </el-icon>
+        </div>
+        <div class="aside-button center-flex">
+          <el-icon :size="28" color="#c9cacb">
+            <User/>
+          </el-icon>
+        </div>
       </el-aside>
       <el-main class="main">
         <router-view/>
@@ -11,30 +23,68 @@
   </div>
 </template>
 <script setup lang="ts">
-import {computed} from 'vue'
+import {computed, onMounted} from 'vue'
 import Avatar from "@/components/avatar/index.vue";
 import {useUserStore} from '@/store/modules/user'
+import {messageStore} from '@/store/modules/message'
+import {ChatRound} from "@element-plus/icons-vue";
+import {getToken} from "@/utils/auth";
 
 
 const userStore = useUserStore();
-const user = computed(()=>{
-  const { id, name, avatar  } = userStore
-  return { id, name, avatar}
+const msgStore = messageStore();
+onMounted(() => {
+  const userInfo = {
+    username: 'admin',
+    password: 'admin123',
+    code: '1',
+    uuid: 'ef68472a498249cfbb3307c21747a0ba'
+  }
+  const token = getToken()
+  if (!token) {
+    userStore.login(userInfo).then(() => {
+      msgStore.syncMessage()
+
+    })
+  }else {
+    msgStore.syncMessage()
+  }
+
+
 })
+const user = computed(() => {
+  const {id, name, avatar} = userStore
+  return {id, name, avatar}
+})
+
 </script>
 
 
-<style scoped>
-.common-layout{
-  width: 100vh;
-  height: 100vw;
-}
-.common-layout .aside{
-  padding: 1rem;
-  width: 75px;
-}
-.common-layout .main{
-  width: calc(100vw - 15px);
-  height: 100vh;
-}
+<style lang="sass" scoped>
+$size: 43px
+.common-layout
+  width: 100vw
+  height: 100vh
+
+  .aside
+    padding: 0.5rem
+    width: 4rem
+    background-color: #1c1d1d
+
+    .aside-button
+      margin: 0.5rem 0
+      padding: 0.5rem 0
+
+      &:hover
+        color: #505050
+
+      .icon-info
+        color: #c9cacb
+
+  .main
+    width: calc(100vw - 4rem)
+    height: 100vh
+    padding: 0
+
+
 </style>
