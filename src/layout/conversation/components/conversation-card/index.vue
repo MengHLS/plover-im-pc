@@ -2,7 +2,7 @@
   <div class="conversation-card">
     <el-row :gutter="4">
       <el-col :span="4">
-        <Avatar :name="conversation.conversationName" :src="avatar"></Avatar>
+        <Avatar :name="conversation.name" :src="avatar"></Avatar>
       </el-col>
       <el-col :span="20">
         <el-row class="full-width">
@@ -25,7 +25,9 @@
 <script lang="ts" setup>
 import Avatar from '@/components/avatar/index.vue';
 import {computed} from "vue";
+import {useAvatarStore} from "@/store/modules/userAvatarStore";
 
+const avatarStore = useAvatarStore()
 const props = defineProps({
   conversation: {
     type: Object,
@@ -33,8 +35,9 @@ const props = defineProps({
     conversationId: String,
     content: String,
     conversationName: String,
-    timeStamp: Number
-  }
+    timeStamp: Number,
+    avatar: String
+  },
 })
 
 const timeText = computed(() => {
@@ -42,8 +45,18 @@ const timeText = computed(() => {
 })
 
 const avatar = computed(() => {
+  const avatar = avatarStore.list.find(item => item.userId === props.conversation.conversationId);
 
+  if (avatar) {
+    return  avatar.userAvatar;
+  } else {
+    console.log(props.conversation.conversationId)
+    return avatarStore.getUserAvatar(props.conversation.conversationId).userAvatar;
+  }
 })
+
+
+
 </script>
 
 

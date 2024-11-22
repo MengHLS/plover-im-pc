@@ -23,39 +23,35 @@
   </div>
 </template>
 <script setup lang="ts">
-import {computed, onMounted} from 'vue'
+import {computed, onBeforeMount, onMounted} from 'vue'
 import Avatar from "@/components/avatar/index.vue";
 import {useUserStore} from '@/store/modules/user'
 import {messageStore} from '@/store/modules/message'
 import {ChatRound} from "@element-plus/icons-vue";
-import {getToken} from "@/utils/auth";
 
 
 const userStore = useUserStore();
 const msgStore = messageStore();
-onMounted(() => {
+
+onBeforeMount(() => {
   const userInfo = {
     username: 'admin',
     password: 'admin123',
-    code: '9',
-    uuid: 'c44af41317384bc0b638178da44a46b9'
+    code: '4',
+    uuid: '03372254854a42b0816d0f9f0dc3cad8'
   }
-  const token = getToken()
-  if (!token) {
-    userStore.login(userInfo).then(() => {
-      msgStore.syncMessage()
 
-    })
-  }else {
+  userStore.login(userInfo).then(() => {
     msgStore.syncMessage()
-  }
+    console.log('syncMessage')
 
-
+  })
 })
 const user = computed(() => {
   const {id, name, avatar} = userStore
   return {id, name, avatar}
 })
+
 
 </script>
 

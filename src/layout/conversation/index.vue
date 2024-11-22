@@ -19,20 +19,20 @@
 
 <script lang="ts" setup>
 import ConversationCard from "./components/conversation-card/index.vue";
-
+import {useConversationStore} from "@/store/modules/conversation";
+import {computed} from "vue";
 
 defineOptions({
   name: 'Conversation',
 })
 
-const conversationList = [
-  {
-    conversationId:"1",
-    content:"聊天内容，聊天内容，聊天内容，聊天内容，聊天内容，聊天内容，聊天内容，聊天内容，聊天内容，聊天内容。",
-    conversationName:"聊天名称，名称名称名称名称名称",
-    timeStamp:0,
-  }
-]
+const conversationStore = useConversationStore()
+
+const conversationList = computed(() => conversationStore.conversations)
+
+conversationStore.syncConversations()
+
+
 </script>
 
 <style lang="sass" scoped>

@@ -5,22 +5,29 @@ import {removeToken, setToken} from "@/utils/auth";
 export const useUserStore = defineStore(
     'user',
     {
-        state: ()=>({
+        state: () => ({
             token: '',
             id: '',
             name: '',
             avatar: '',
         }),
-        actions:{
-             login(userInfo: any){
+        actions: {
+            async login(userInfo: any) {
+
                 const username = userInfo.username.trim()
                 const password = userInfo.password
                 const code = userInfo.code
                 const uuid = userInfo.uuid
-                return new Promise((resolve, reject)=>{
+                const token = await window.api.getValueByKey('token')
+                if (token!=null) {
+                    this.token = token
+                    setToken(token)
+                    return Promise.resolve(token)
+                }
+                return new Promise((resolve, reject) => {
                     login(username, password, code, uuid).then(res => {
                         let data = res.data
-                        console.log(data)
+                        window.api.setValueByKey("token", data.access_token)
                         setToken(data.access_token)
                         this.token = data.access_token
                         resolve(res)
@@ -29,8 +36,8 @@ export const useUserStore = defineStore(
                     })
                 })
             },
-            getInfo(){
-                const user = {avatar:''}
+            getInfo() {
+                const user = {avatar: ''}
                 return new Promise((resolve, reject) => {
                     getInfo().then(res => {
                         const user = res.data.user

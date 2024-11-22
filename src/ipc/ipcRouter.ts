@@ -2,6 +2,8 @@
 import {ipcMain} from 'electron';
 import {IPC_CHANNELS} from './ipcChannels';
 import {messageApiHandlers} from '@/services/MessageService';
+import {keyValueApiHandlers} from "@/services/KeyValueService";
+import {conversationApiHandlers} from "@/services/ConversationService";
 
 export function registerIpcRoutes(): void {
     const routes = {
@@ -9,9 +11,13 @@ export function registerIpcRoutes(): void {
         [IPC_CHANNELS.ADD_MESSAGE]: messageApiHandlers.addMessage,
         [IPC_CHANNELS.DELETE_MESSAGE]: messageApiHandlers.deleteMessage,
         [IPC_CHANNELS.GET_LAST_MESSAGE]: messageApiHandlers.getLastMessage,
-        [IPC_CHANNELS.BATCH_INSERT_MESSAGES]: messageApiHandlers.batchInsertMessages
+        [IPC_CHANNELS.BATCH_INSERT_MESSAGES]: messageApiHandlers.batchInsertMessages,
         // Add more routes as needed
-
+        [IPC_CHANNELS.GET_VALUE_BY_KEY]: keyValueApiHandlers.getValueByKey,
+        [IPC_CHANNELS.SET_VALUE_BY_KEY]: keyValueApiHandlers.setValueByKey,
+        [IPC_CHANNELS.DELETE_VALUE_BY_KEY]: keyValueApiHandlers.deleteValueByKey,
+        // Add more IPC routes as needed
+        [IPC_CHANNELS.GET_ALL_CONVERSATIONS]: conversationApiHandlers.getAllConversations,
     };
 
     for (const [channel, handler] of Object.entries(routes)) {
