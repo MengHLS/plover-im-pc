@@ -3,6 +3,7 @@ import path from 'path';
 import initDatabase from '@/db/migrations';
 import {registerIpcRoutes} from '@/ipc/ipcRouter';
 
+console.log('Node.js path module:', path); // 确认 path 模块是否正确加载
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -14,8 +15,8 @@ const createWindow = () => {
     width: 1600,
     height: 1200,
     webPreferences: {
+      nodeIntegration: true,
       preload: path.join(__dirname, 'preload.js'),
-      webSecurity: false
     },
   });
 
@@ -27,7 +28,6 @@ const createWindow = () => {
   }
   // 初始化数据库
   initDatabase();
-
   // 注册 IPC 路由
   registerIpcRoutes();
   // Open the DevTools.

@@ -1,7 +1,7 @@
 // src/ipc/ipcRouter.ts
-import { ipcMain } from 'electron';
-import { IPC_CHANNELS } from './ipcChannels';
-import { messageApiHandlers } from '@/services/MessageService';
+import {ipcMain} from 'electron';
+import {IPC_CHANNELS} from './ipcChannels';
+import {messageApiHandlers} from '@/services/MessageService';
 
 export function registerIpcRoutes(): void {
     const routes = {

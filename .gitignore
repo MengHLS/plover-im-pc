@@ -91,3 +91,5 @@ typings/
 # Electron-Forge
 out/
 .idea
+/.yarn/releases/yarn-1.22.22.cjs
+/.yarnrc

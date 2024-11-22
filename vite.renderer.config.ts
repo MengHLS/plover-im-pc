@@ -6,11 +6,20 @@ import {ElementPlusResolver} from "unplugin-vue-components/resolvers";
 import Components from "unplugin-vue-components/vite";
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
-import * as electron from "electron";
 
 // https://vitejs.dev/config
 export default defineConfig({
-
+    server:{
+        port: 30000,
+        host: 'localhost',
+        proxy:{
+            '/dev-api': {
+                target: 'http://localhost:8080',
+                changeOrigin: true,
+                rewrite: path => path.replace(/^\/dev-api/, '')
+            }
+        }
+    },
     plugins: [
         // 自动导入插件
         AutoImport({

@@ -54,10 +54,22 @@ export const messageService = {
     //获取最新的一条消息
     getLastMessage: async () => {
         const db = DatabaseUtil.getInstance().getDatabase();
-        const result = db.prepare('SELECT * FROM messages ORDER BY time_stamp DESC LIMIT 1').get();
+        const result = db.prepare('SELECT * FROM messages ORDER BY time_stamp DESC LIMIT 1').get() as {
+            id: string;
+            type: number;
+            content: string;
+            sender_id: string;
+            sender_name: string;
+            sender_type: number;
+            receiver_id: string;
+            receiver_name: string;
+            receiver_type: number;
+            create_time: string;
+            time_stamp: number;
+        };
         if (result) {
             return new Message(
-                result.id,
+                result.id ,
                 result.type,
                 result.content,
                 result.sender_id,
@@ -96,7 +108,6 @@ export const messageService = {
                 message.timeStamp
             );
         });
-        stmt.finalize();
     }
 };
 

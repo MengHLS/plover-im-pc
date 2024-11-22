@@ -37,8 +37,8 @@ onMounted(() => {
   const userInfo = {
     username: 'admin',
     password: 'admin123',
-    code: '1',
-    uuid: 'ef68472a498249cfbb3307c21747a0ba'
+    code: '9',
+    uuid: 'c44af41317384bc0b638178da44a46b9'
   }
   const token = getToken()
   if (!token) {
