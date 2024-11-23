@@ -8,7 +8,7 @@ export const KeyValueService = {
     },
     getValueByKey: (key: string) => {
         const db = DatabaseUtil.getInstance().getDatabase();
-        const result = db.prepare('SELECT value FROM key_value_store WHERE id =?').get(key);
+        const result = db.prepare('SELECT value FROM key_value_store WHERE id =?').get(key) as{value: string | null}
         console.log(result)
         return result? result.value : null;
     },

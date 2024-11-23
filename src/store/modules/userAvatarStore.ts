@@ -9,8 +9,8 @@ export const useAvatarStore = defineStore(
             list:[]
         }),
         actions:{
-            async getUserAvatar(userId){
-                let userAvatar = this.list.find(user=> user.userId==userId)
+            async getUserAvatar(userId: string){
+                let userAvatar = this.list.find((user: any)=> user.userId==userId)
                 console.log(userAvatar)
                 if (userAvatar){
                     return userAvatar;
@@ -18,8 +18,8 @@ export const useAvatarStore = defineStore(
                 userAvatar = await getBaseInfo(userId).then(res => {
                     const userAvatar = {
                         userId:userId,
-                        userName:res.user.userName,
-                        userAvatar: res.user.avatar,
+                        userName:res.data.userName,
+                        userAvatar: res.data.avatar,
                     }
                     this.list.push(userAvatar)
                     return userAvatar;

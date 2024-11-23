@@ -4,7 +4,7 @@ import axios from "axios";
 import cache from "@/plugins/cache";
 import {getToken} from "@/utils/auth";
 import {tansParams} from "@/utils/common";
-import errorCode from "@/utils/errorCode";
+import {errorCode} from "@/utils/errorCode";
 import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
 import {useUserStore} from "@/store/modules/user";
 
@@ -72,7 +72,7 @@ service.interceptors.request.use(config => {
 // 响应拦截器
 service.interceptors.response.use(res => {
         // 未设置状态码则默认成功状态
-        const code = res.data.code || 200;
+        const code = res.data.code || '200';
         // 获取错误信息
         let msg = res.data.msg || errorCode['default']
         if (errorCode[code]) {

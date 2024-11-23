@@ -1,7 +1,8 @@
 import {Conversation} from "@/models/Conversation";
+import {Message} from "@/models/Message";
 
 export interface IElectronAPI {
-    getLastMessage: () => Promise<void>,
+    getLastMessage: () => Promise<Message>,
     batchInsertMessages: (messages: any[]) => Promise<void>,
 
     getValueByKey: (key: string) => Promise<string>,

@@ -3,7 +3,6 @@ import path from 'path';
 import initDatabase from '@/db/migrations';
 import {registerIpcRoutes} from '@/ipc/ipcRouter';
 
-console.log('Node.js path module:', path); // 确认 path 模块是否正确加载
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
