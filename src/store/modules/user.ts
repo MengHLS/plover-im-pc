@@ -53,7 +53,8 @@ export const useUserStore = defineStore(
             },
             logOut() {
                 return new Promise((resolve, reject) => {
-                    logout().then(() => {
+                    logout().then(async () => {
+                        await window.api.deleteValueByKey('token')
                         this.token = ''
                         this.roles = []
                         removeToken()

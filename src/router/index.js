@@ -1,6 +1,6 @@
 import { createWebHistory, createRouter } from 'vue-router'
 /* Layout */
-import layout from '@/layout/Index.vue'
+import layout from '@/views/Index.vue'
 
 /**
  * Note: 路由配置项
@@ -35,6 +35,10 @@ export const constantRoutes = [
             }
         ]
     },
+    {
+        path: '/login',
+        component: () => import('@/views/login.vue'),
+    }
 ]
 
 const router = createRouter({

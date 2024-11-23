@@ -10,28 +10,13 @@ if (require('electron-squirrel-startup')) {
 }
 
 const createWindow = () => {
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 1600,
-    height: 1200,
-    webPreferences: {
-      nodeIntegration: true,
-      preload: path.join(__dirname, 'preload.js'),
-    },
-  });
 
-  // and load the index.html of the app.
-  if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-    mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL).then(r => {});
-  } else {
-    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`)).then(r => {});
-  }
   // 初始化数据库
   initDatabase();
   // 注册 IPC 路由
   registerIpcRoutes();
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+
+  createLoginWindow();
 };
 
 
@@ -49,6 +34,8 @@ app.on('window-all-closed', () => {
   }
 });
 
+
+
 app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
@@ -59,3 +46,25 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+
+function createLoginWindow() {
+  // Create the browser window.
+  const loginWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      nodeIntegration: true,
+      preload: path.join(__dirname, 'preload.js'),
+    },
+  });
+
+  // and load the index.html of the app.
+  if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+    loginWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL+"/#/login").then(r => {});
+  } else {
+    loginWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html/#/login`)).then(r => {});
+  }
+
+
+}

@@ -23,7 +23,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import {computed, onBeforeMount, onMounted} from 'vue'
+import {computed, onBeforeMount} from 'vue'
 import Avatar from "@/components/avatar/index.vue";
 import {useUserStore} from '@/store/modules/user'
 import {messageStore} from '@/store/modules/message'
@@ -37,8 +37,8 @@ onBeforeMount(() => {
   const userInfo = {
     username: 'admin',
     password: 'admin123',
-    code: '4',
-    uuid: '03372254854a42b0816d0f9f0dc3cad8'
+    code: '1',
+    uuid: 'e1ea5764836e4ef2a751684032da405b'
   }
 
   userStore.login(userInfo).then(() => {

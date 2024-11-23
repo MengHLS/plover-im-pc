@@ -12,4 +12,6 @@ export const IPC_CHANNELS = {
     DELETE_VALUE_BY_KEY: 'delete-value-by-key',
 
     GET_ALL_CONVERSATIONS: 'get-all-conversations',
+
+    LOGIN_SUCCESS: 'login-success',
 };

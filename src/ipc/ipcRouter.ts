@@ -4,6 +4,7 @@ import {IPC_CHANNELS} from './ipcChannels';
 import {messageApiHandlers} from '@/services/MessageService';
 import {keyValueApiHandlers} from "@/services/KeyValueService";
 import {conversationApiHandlers} from "@/services/ConversationService";
+import {loginApiHandlers} from "@/services/LoginService";
 
 export function registerIpcRoutes(): void {
     const routes = {
@@ -18,6 +19,8 @@ export function registerIpcRoutes(): void {
         [IPC_CHANNELS.DELETE_VALUE_BY_KEY]: keyValueApiHandlers.deleteValueByKey,
         // Add more IPC routes as needed
         [IPC_CHANNELS.GET_ALL_CONVERSATIONS]: conversationApiHandlers.getAllConversations,
+
+        [IPC_CHANNELS.LOGIN_SUCCESS]: loginApiHandlers.loginSuccess,
     };
 
     for (const [channel, handler] of Object.entries(routes)) {

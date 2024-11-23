@@ -9,6 +9,8 @@ export interface IElectronAPI {
     deleteValueByKey: (key: string) => Promise<void>
 
     getAllConversations: (userId: string) => Promise<Conversation[]>
+
+    loginSuccess: (userId: string) => void
 }
 
 declare global {
