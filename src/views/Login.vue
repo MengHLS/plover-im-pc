@@ -15,15 +15,17 @@ onBeforeMount(() => {
   const userInfo = {
     username: 'admin',
     password: 'admin123',
-    code: '36',
-    uuid: '1084ad3991d143e0ba768f6dd36f8710'
+    code: '16',
+    uuid: '6d0c8d18b32c4fef803297787be9ec70'
   }
-
-  userStore.login(userInfo).then(() => {
-    console.log('login success')
-    // 跳转到首页
-    //创建主窗口
+  userStore.auth().then(() => {
     window.api.loginSuccess()
+  }).catch(() => {
+    userStore.login(userInfo).then(() => {
+      // 跳转到首页
+      // 创建主窗口
+      window.api.loginSuccess()
+    })
   })
 })
 </script>

@@ -12,5 +12,5 @@ contextBridge.exposeInMainWorld('api', {
     deleteValueByKey: (key: string) => ipcRenderer.invoke('delete-value-by-key', key),
     getAllConversations: (userId: string) => ipcRenderer.invoke('get-all-conversations', userId),
 
-    loginSuccess: (username: string) => ipcRenderer.invoke('login-success', username)
+    loginSuccess: () => ipcRenderer.invoke('login-success')
 });

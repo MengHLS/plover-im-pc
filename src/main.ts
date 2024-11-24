@@ -65,5 +65,5 @@ function createLoginWindow() {
     loginWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html/#/login`)).then(r => {});
   }
 
-
+  loginWindow.webContents.openDevTools()
 }

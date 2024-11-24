@@ -1,5 +1,5 @@
 import {defineStore} from "pinia";
-import {getInfo, login, logout} from "@/api/login";
+import {getInfo, login, logout, refreshToken} from "@/api/login";
 import {removeToken, setToken} from "@/utils/auth";
 
 export const useUserStore = defineStore(
@@ -21,6 +21,10 @@ export const useUserStore = defineStore(
                 const token = await window.api.getValueByKey('token')
                 if (token!=null) {
                     this.token = token
+                    //刷新token
+                    refreshToken().then(res=> {
+                        console.log("刷新token成功")
+                    })
                     setToken(token)
                     return Promise.resolve(token)
                 }
@@ -63,6 +67,20 @@ export const useUserStore = defineStore(
                         reject(error)
                     })
                 })
+            },
+            async auth(){
+                const token = await window.api.getValueByKey('token')
+                if (token!=null) {
+                    this.token = token
+                    //刷新token
+                    refreshToken().then(res=> {
+                        console.log("刷新token成功")
+                    })
+                    setToken(token)
+                    return Promise.resolve(token)
+                }else {
+                    return Promise.reject("请先登录")
+                }
             }
         }
     }

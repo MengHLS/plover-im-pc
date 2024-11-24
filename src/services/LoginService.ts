@@ -3,7 +3,8 @@ import path from "path";
 
 
 export const LoginService = {
-    loginSuccess: (username: string) => {
+    loginSuccess: () => {
+        console.log("===登陆成功，关闭窗口===");
         const focusWindow = BrowserWindow.getFocusedWindow()
         if (focusWindow) {
             focusWindow.close()

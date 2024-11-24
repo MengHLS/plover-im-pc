@@ -31,3 +31,10 @@ export function logout() {
         method: 'delete'
     })
 }
+
+export function refreshToken() {
+    return request({
+        url: '/auth/refresh',
+        method: 'post'
+    })
+}

@@ -29,22 +29,13 @@ import {useUserStore} from '@/store/modules/user'
 import {messageStore} from '@/store/modules/message'
 import {ChatRound} from "@element-plus/icons-vue";
 
-
 const userStore = useUserStore();
 const msgStore = messageStore();
 
 onBeforeMount(() => {
-  const userInfo = {
-    username: 'admin',
-    password: 'admin123',
-    code: '1',
-    uuid: 'e1ea5764836e4ef2a751684032da405b'
-  }
-
-  userStore.login(userInfo).then(() => {
+  userStore.auth().then(() => {
     msgStore.syncMessage()
-    console.log('syncMessage')
-
+  }).catch(() => {
   })
 })
 const user = computed(() => {

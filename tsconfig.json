@@ -22,7 +22,6 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    ,
     "forge.env.d.ts"
   ]
 }
