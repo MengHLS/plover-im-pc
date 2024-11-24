@@ -41,7 +41,6 @@ export const useUserStore = defineStore(
                 })
             },
             getInfo() {
-                const user = {avatar: ''}
                 return new Promise((resolve, reject) => {
                     getInfo().then(res => {
                         const user = res.data.user

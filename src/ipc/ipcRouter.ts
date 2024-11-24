@@ -5,6 +5,7 @@ import {messageApiHandlers} from '@/services/MessageService';
 import {keyValueApiHandlers} from "@/services/KeyValueService";
 import {conversationApiHandlers} from "@/services/ConversationService";
 import {loginApiHandlers} from "@/services/LoginService";
+import {webSocketApiHandler} from "@/services/WebSocketService";
 
 export function registerIpcRoutes(): void {
     const routes = {
@@ -21,6 +22,10 @@ export function registerIpcRoutes(): void {
         [IPC_CHANNELS.GET_ALL_CONVERSATIONS]: conversationApiHandlers.getAllConversations,
 
         [IPC_CHANNELS.LOGIN_SUCCESS]: loginApiHandlers.loginSuccess,
+
+        [IPC_CHANNELS.INIT]: webSocketApiHandler.init,
+        [IPC_CHANNELS.SEND]: webSocketApiHandler.send,
+        [IPC_CHANNELS.CLOSE]: webSocketApiHandler.close,
     };
 
     for (const [channel, handler] of Object.entries(routes)) {

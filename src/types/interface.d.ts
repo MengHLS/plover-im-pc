@@ -12,6 +12,10 @@ export interface IElectronAPI {
     getAllConversations: (userId: string) => Promise<Conversation[]>
 
     loginSuccess: () => void
+
+    init: (data:any) => Promise<void>
+    send: (data: any) => Promise<void>
+    close: () => Promise<void>
 }
 
 declare global {

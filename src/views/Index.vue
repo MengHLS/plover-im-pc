@@ -28,6 +28,8 @@ import Avatar from "@/components/avatar/index.vue";
 import {useUserStore} from '@/store/modules/user'
 import {messageStore} from '@/store/modules/message'
 import {ChatRound} from "@element-plus/icons-vue";
+import {WEBSOCKET_TYPE} from "@/utils/enums/webSocketType";
+import {getToken} from "@/utils/auth";
 
 const userStore = useUserStore();
 const msgStore = messageStore();
@@ -35,6 +37,15 @@ const msgStore = messageStore();
 onBeforeMount(() => {
   userStore.auth().then(() => {
     msgStore.syncMessage()
+    const data = {
+      "action": WEBSOCKET_TYPE.LOGIN,
+      "data":{
+        "token":getToken(),
+        "deviceType":1,
+        "osType":3,
+      }
+    }
+    window.api.init(data)
   }).catch(() => {
   })
 })

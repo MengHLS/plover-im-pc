@@ -7,7 +7,7 @@ export default defineConfig({
     base: './',
     build:{
         rollupOptions:{
-            external:['better-sqlite3', 'keytar']
+            external:['better-sqlite3', 'keytar','ws']
         }
     },
     resolve:{

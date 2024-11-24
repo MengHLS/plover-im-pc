@@ -14,4 +14,8 @@ export const IPC_CHANNELS = {
     GET_ALL_CONVERSATIONS: 'get-all-conversations',
 
     LOGIN_SUCCESS: 'login-success',
+
+    INIT: 'init',
+    SEND: 'send',
+    CLOSE: 'close'
 };

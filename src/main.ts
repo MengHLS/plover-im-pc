@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import path from 'path';
 import initDatabase from '@/db/migrations';
 import {registerIpcRoutes} from '@/ipc/ipcRouter';
@@ -60,9 +60,9 @@ function createLoginWindow() {
 
   // and load the index.html of the app.
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-    loginWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL+"/#/login").then(r => {});
+    loginWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL+"/#/login").then(() => {});
   } else {
-    loginWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html/#/login`)).then(r => {});
+    loginWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html/#/login`)).then(() => {});
   }
 
   loginWindow.webContents.openDevTools()
