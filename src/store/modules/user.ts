@@ -10,32 +10,27 @@ export const useUserStore = defineStore(
             id: '',
             name: '',
             avatar: '',
+            isLogin: false,
+            isFetching: false,
+            isLogging: false,
         }),
         actions: {
             async login(userInfo: any) {
-
+                this.isLogging = true
                 const username = userInfo.username.trim()
                 const password = userInfo.password
                 const code = userInfo.code
                 const uuid = userInfo.uuid
-                const token = await window.api.getValueByKey('token')
-                if (token!=null) {
-                    this.token = token
-                    //刷新token
-                    refreshToken().then(res=> {
-                        console.log("刷新token成功")
-                    })
-                    setToken(token)
-                    return Promise.resolve(token)
-                }
                 return new Promise((resolve, reject) => {
                     login(username, password, code, uuid).then(res => {
                         let data = res.data
                         window.api.setValueByKey("token", data.access_token)
                         setToken(data.access_token)
                         this.token = data.access_token
+                        this.isLogging = false
                         resolve(res)
                     }).catch(error => {
+                        this.isLogging = false
                         reject(error)
                     })
                 })
@@ -68,18 +63,34 @@ export const useUserStore = defineStore(
                 })
             },
             async auth(){
-                const token = await window.api.getValueByKey('token')
-                if (token!=null) {
-                    this.token = token
-                    //刷新token
-                    refreshToken().then(res=> {
-                        console.log("刷新token成功")
-                    })
+                this.isLogging = true
+                return new Promise<any>((resolve, reject) => {
+                    const token =  window.api.getValueByKey('token')
+                    if (!token) {
+                        this.token = token
+                        //刷新token
+                        refreshToken().then(res=> {
+                            this.isLogin = true
+                            console.log("刷新token成功"+":"+token)
+                            setToken(token)
+                            this.isLogging = false
+                            resolve(res)
+                        }).catch(error => {
+                            this.isLogging = false
+                            reject(error)
+                        })
+                    }else {
+                        this.isLogging = false
+                        reject("重新登录")
+                    }
+                })
+            },
+            afterLogin(){
+                return new Promise<any>((resolve, reject) => {
+                    const token =  window.api.getValueByKey('token')
                     setToken(token)
-                    return Promise.resolve(token)
-                }else {
-                    return Promise.reject("请先登录")
-                }
+                    resolve(token)
+                })
             }
         }
     }

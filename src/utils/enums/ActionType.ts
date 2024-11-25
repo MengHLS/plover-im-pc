@@ -1,4 +1,4 @@
-export const WEBSOCKET_TYPE = {
+export const ACTION_TYPE = {
 
     HEARTBEAT: 0, // 心跳
     LOGIN:1,

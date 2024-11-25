@@ -1,19 +1,19 @@
 import WebSocket from "ws";
-import {WEBSOCKET_TYPE} from "@/utils/enums/webSocketType";
-import {getToken} from "@/utils/auth";
+import {ACTION_TYPE} from "@/utils/enums/ActionType";
+import {SocketDTO} from "@/models/SocketDTO";
+import {GenericCallback} from "@/types/CallBack";
 
-type CallbackWithReturn = (num: string) => string;
 
 export default  class  WebSocketClass{
     private url: string;
-    private callback: CallbackWithReturn;
+    private callback: GenericCallback<SocketDTO>;
     private ws: WebSocket;
     private status: number;
     private ping: number;
     private pingInterval: NodeJS.Timeout;
     private reconnect: number;
 
-    constructor(url: string, callback: CallbackWithReturn ) {
+    constructor(url: string, callback: GenericCallback<SocketDTO> ) {
         this.url = url
         this.callback = callback
         this.ws = null // websocket 对象
@@ -47,7 +47,6 @@ export default  class  WebSocketClass{
 
     /**
      * @description: 关闭weibsocket 主动关闭不会触发重连
-     * @param {*}
      * @return {*}
      * @author: gumingchen
      */
@@ -74,13 +73,12 @@ export default  class  WebSocketClass{
 
     /**
      * @description: 心跳机制
-     * @param {*}
      * @return {*}
      * @author: gumingchen
      */
     heartHandler() {
         const data = {
-            action: WEBSOCKET_TYPE.HEARTBEAT
+            action: ACTION_TYPE.HEARTBEAT
         }
         this.pingInterval = setInterval(() => {
             if (this.status === 1) {
@@ -105,7 +103,7 @@ export default  class  WebSocketClass{
      * @return {*}
      * @author: gumingchen
      */
-    send(data: any) {
+    send(data: SocketDTO) {
         return this.ws.send(JSON.stringify(data))
     }
 }

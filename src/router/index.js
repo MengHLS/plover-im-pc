@@ -1,6 +1,6 @@
 import { createWebHistory, createRouter } from 'vue-router'
 /* Layout */
-import layout from '@/views/Index.vue'
+import layout from '@/layout/index.vue'
 
 /**
  * Note: 路由配置项
@@ -30,14 +30,15 @@ export const constantRoutes = [
         component: layout,
         children:[
             {
-                path: '',
+                path: '/conversation',
                 component: ()=>import('@/layout/conversation/index.vue')
             }
         ]
     },
     {
         path: '/login',
-        component: () => import('@/views/login.vue'),
+        component: () => import('@/views/Login'),
+        hidden: true
     }
 ]
 

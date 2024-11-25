@@ -1,6 +1,6 @@
 import {DatabaseUtil} from "@/db/DatabaseUtil";
 
-export const KeyValueService = {
+export const keyValueService = {
 
     setValueByKey:async (key: string, value: string) => {
         const db = DatabaseUtil.getInstance().getDatabase();
@@ -19,7 +19,7 @@ export const KeyValueService = {
 }
 
 export const keyValueApiHandlers = {
-    getValueByKey:KeyValueService.getValueByKey,
-    setValueByKey: KeyValueService.setValueByKey,
-    deleteValueByKey: KeyValueService.deleteValueByKey,
+    getValueByKey:keyValueService.getValueByKey,
+    setValueByKey: keyValueService.setValueByKey,
+    deleteValueByKey: keyValueService.deleteValueByKey,
 }

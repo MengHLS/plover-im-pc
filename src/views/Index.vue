@@ -1,88 +1,41 @@
 <template>
-  <div class="common-layout">
-    <el-container>
-      <el-aside class="aside">
-        <div class="center-flex">
-          <Avatar :name="user.name" :src="user.avatar" :size="36"></Avatar>
-        </div>
-        <div class="aside-button center-flex">
-          <el-icon :size="28" color="#c9cacb">
-            <ChatRound/>
-          </el-icon>
-        </div>
-        <div class="aside-button center-flex">
-          <el-icon :size="28" color="#c9cacb">
-            <User/>
-          </el-icon>
-        </div>
-      </el-aside>
-      <el-main class="main">
-        <router-view/>
-      </el-main>
-    </el-container>
-  </div>
+
 </template>
 <script setup lang="ts">
-import {computed, onBeforeMount} from 'vue'
+import {computed} from 'vue'
 import Avatar from "@/components/avatar/index.vue";
 import {useUserStore} from '@/store/modules/user'
 import {messageStore} from '@/store/modules/message'
 import {ChatRound} from "@element-plus/icons-vue";
-import {WEBSOCKET_TYPE} from "@/utils/enums/webSocketType";
+import {ACTION_TYPE} from "@/utils/enums/ActionType";
 import {getToken} from "@/utils/auth";
+import {SocketDTO} from "@/models/SocketDTO";
+import {useConversationStore} from '@/store/modules/conversation'
 
 const userStore = useUserStore();
-const msgStore = messageStore();
-
-onBeforeMount(() => {
-  userStore.auth().then(() => {
-    msgStore.syncMessage()
-    const data = {
-      "action": WEBSOCKET_TYPE.LOGIN,
-      "data":{
-        "token":getToken(),
-        "deviceType":1,
-        "osType":3,
+const conversationStore = useConversationStore()
+const msgStore = messageStore()
+if (userStore.isLogin) {
+  userStore.afterLogin().then(() => {
+        init()
       }
-    }
-    window.api.init(data)
-  }).catch(() => {
-  })
-})
-const user = computed(() => {
-  const {id, name, avatar} = userStore
-  return {id, name, avatar}
-})
+  )
+}
 
+function init() {
+  msgStore.syncMessage()
+  const data = {
+    "action": ACTION_TYPE.LOGIN,
+    "data": {
+      "token": getToken(),
+      "deviceType": 1,
+      "osType": 3,
+    }
+  }
+  window.api.init(data).then(() => {
+
+  })
+}
 
 </script>
 
-
-<style lang="sass" scoped>
-$size: 43px
-.common-layout
-  width: 100vw
-  height: 100vh
-
-  .aside
-    padding: 0.5rem
-    width: 4rem
-    background-color: #1c1d1d
-
-    .aside-button
-      margin: 0.5rem 0
-      padding: 0.5rem 0
-
-      &:hover
-        color: #505050
-
-      .icon-info
-        color: #c9cacb
-
-  .main
-    width: calc(100vw - 4rem)
-    height: 100vh
-    padding: 0
-
-
-</style>

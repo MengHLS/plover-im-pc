@@ -1,33 +1,35 @@
 import WebSocketClass from "@/utils/webSocket";
-import {WEBSOCKET_TYPE} from "@/utils/enums/webSocketType";
+import {ACTION_TYPE} from "@/utils/enums/ActionType";
 import {BrowserWindow} from "electron";
+import {SocketDTO} from "@/models/SocketDTO";
+import {windowService} from "@/services/WindowService";
 
 export const webSocketService = {
 
     init(data: any): void {
         const url = getWebsocketOrigin();
         console.log("ws地址========="+ url)
-        webSocket = new WebSocketClass(url, response=>{
-            if (response && response.action === WEBSOCKET_TYPE.HEARTBEAT) {
+        webSocket = new WebSocketClass(url, (response: SocketDTO)=>{
+            if (response && response.action === ACTION_TYPE.HEARTBEAT) {
                 return
             }
-            if (response && response.action === WEBSOCKET_TYPE.LOGIN_SUCCESS){
+            if (response && response.action === ACTION_TYPE.LOGIN_SUCCESS){
                 console.log("🚲~~:即时通讯登陆成功！", )
                 webSocket.heartHandler()
                 return;
             }
-            if (response && response.action === WEBSOCKET_TYPE.PRIVATE_CHAT_MESSAGE){
+            if (response && response.action === ACTION_TYPE.PRIVATE_CHAT_MESSAGE){
                 // rootStore.onReceiveMessage(data)
-                const mainWindow = BrowserWindow.getFocusedWindow()
-                mainWindow.webContents.send("private_message", response)
+                const mainWindow = windowService.getWindow("mainWindow")
+                console.log("主窗口对象"+ mainWindow)
+                mainWindow.webContents.send("socket_message", response)
                 return;
             }
-            this.response = response
             console.log('🚲~~:', response)
         })
         webSocket.connect(data)
     },
-    send(data: any): void {
+    send(data: SocketDTO): void {
         webSocket.send(data)
     },
     close(): void{
@@ -46,7 +48,7 @@ export const webSocketApiHandler={
 
 
 
-let webSocket = null
+let webSocket:WebSocketClass = null
 /**
  * 获取websock链接地址
  */

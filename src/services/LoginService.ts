@@ -1,15 +1,25 @@
 import {BrowserWindow} from "electron";
 import path from "path";
+import {windowService} from "@/services/WindowService";
+import {webSocketService} from "@/services/WebSocketService";
+import {ACTION_TYPE} from "@/utils/enums/ActionType";
+import {keyValueService} from "@/services/KeyValueService";
 
 
 export const LoginService = {
     loginSuccess: () => {
-        console.log("===登陆成功，关闭窗口===");
-        const focusWindow = BrowserWindow.getFocusedWindow()
-        if (focusWindow) {
-            focusWindow.close()
-        }
+        windowService.removeWindow("loginWindow");
         createMainWindow()
+        const token = keyValueService.getValueByKey("token");
+        const data = {
+            "action": ACTION_TYPE.LOGIN,
+            "data": {
+                "token": token,
+                "deviceType": 1,
+                "osType": 3,
+            }
+        }
+        webSocketService.init(data)
     }
 
 }
@@ -26,10 +36,11 @@ function createMainWindow() {
 
     // and load the index.html of the app.
     if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-        mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL).then(() => {});
+        mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL+"/conversation").then(() => {});
     } else {
-        mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`)).then(() => {});
+        mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html/#/conversation`)).then(() => {});
     }
+    windowService.setWindow("mainWindow", mainWindow.id);
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
 }

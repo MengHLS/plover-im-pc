@@ -2,6 +2,8 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
 import { contextBridge, ipcRenderer } from 'electron';
+import {SocketDTO} from "@/models/SocketDTO";
+import IpcRendererEvent = Electron.IpcRendererEvent;
 
 // 暴露安全的 API 给渲染进程
 contextBridge.exposeInMainWorld('api', {
@@ -15,7 +17,8 @@ contextBridge.exposeInMainWorld('api', {
     loginSuccess: () => ipcRenderer.invoke('login-success'),
 
     init: (data: any) => ipcRenderer.invoke('init', data),
-    send: (data: any) => ipcRenderer.invoke('send', data),
+    send: (data: SocketDTO) => ipcRenderer.invoke('send', data),
     close: () => ipcRenderer.invoke('close'),
 
+    onReceiveMessage: (callback: (event: IpcRendererEvent,message: SocketDTO) => void) => {ipcRenderer.on("socket_message", callback)}
 });

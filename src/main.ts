@@ -2,6 +2,7 @@ import { app, BrowserWindow } from 'electron';
 import path from 'path';
 import initDatabase from '@/db/migrations';
 import {registerIpcRoutes} from '@/ipc/ipcRouter';
+import {windowService} from "@/services/WindowService";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -50,6 +51,7 @@ app.on('activate', () => {
 function createLoginWindow() {
   // Create the browser window.
   const loginWindow = new BrowserWindow({
+
     width: 800,
     height: 600,
     webPreferences: {
@@ -60,10 +62,10 @@ function createLoginWindow() {
 
   // and load the index.html of the app.
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-    loginWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL+"/#/login").then(() => {});
+    loginWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL+"/login").then(() => {});
   } else {
     loginWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html/#/login`)).then(() => {});
   }
 
-  loginWindow.webContents.openDevTools()
+  windowService.setWindow("loginWindow", loginWindow.id);
 }

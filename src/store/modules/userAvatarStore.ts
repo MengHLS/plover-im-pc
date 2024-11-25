@@ -11,7 +11,6 @@ export const useAvatarStore = defineStore(
         actions:{
             async getUserAvatar(userId: string){
                 let userAvatar = this.list.find((user: any)=> user.userId==userId)
-                console.log(userAvatar)
                 if (userAvatar){
                     return userAvatar;
                 }
@@ -24,7 +23,6 @@ export const useAvatarStore = defineStore(
                     this.list.push(userAvatar)
                     return userAvatar;
                 })
-                console.log(userAvatar)
                 return userAvatar;
             }
         }
