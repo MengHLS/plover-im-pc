@@ -42,7 +42,7 @@ function createMainWindow() {
     }
     windowService.setWindow("mainWindow", mainWindow.id);
     // Open the DevTools.
-    mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools({mode:"detach"});
 }
 
 export const loginApiHandlers = {
