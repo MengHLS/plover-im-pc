@@ -33,9 +33,11 @@ import {computed} from "vue";
 import {useUserStore} from '@/store/modules/user'
 import {SocketDTO} from "@/models/SocketDTO";
 import {useConversationStore} from "@/store/modules/conversation";
+import {useMessageStore} from "@/store/modules/message";
 
 const userStore = useUserStore()
 const conversationStore = useConversationStore()
+const messageStore = useMessageStore()
 
 const user = computed(() => {
   const {id, name, avatar} = userStore
@@ -45,6 +47,12 @@ const user = computed(() => {
 window.api.onReceiveMessage((data: SocketDTO) => {
   conversationStore.receiveMessage(data)
 })
+
+userStore.setInfo().then(()=>{
+  messageStore.syncMessage()
+  conversationStore.syncConversations()
+})
+
 </script>
 
 
@@ -54,11 +62,11 @@ $size: 43px
 .common-layout
   width: 100vw
   height: 100vh
+  background-image: linear-gradient(45deg,#EAF1FF,#FFF3FF,#E0EBFF, #D6E9FF)
 
   .aside
     padding: 0.5rem
     width: 4rem
-    background-color: #1c1d1d
 
     .aside-button
       margin: 0.5rem 0

@@ -1,11 +1,21 @@
 import {defineStore} from "pinia";
 import {messageSync} from "@/api/message";
+import {reactive} from "vue";
+import {Message} from "@/models/Message";
 
 
-export const messageStore = defineStore(
+export const useMessageStore = defineStore(
     'message', {
         state: () => ({
-            messages: []
+            list: reactive([
+                {
+                    conversationId: String,
+                    messages: [] as Message[],
+                },{
+                deep:true
+                }
+            ]),
+            messageMap: reactive(new Map<String, Message[]>()),
         }),
         actions: {
             syncMessage: async function () {
@@ -14,7 +24,7 @@ export const messageStore = defineStore(
                 console.log(message)
                 let timeStamp = Date.now()
 
-                if (message!=null){
+                if (message != null) {
                     timeStamp = message.timeStamp
                 }
                 this.syncMessagePage(timeStamp, 100)
@@ -33,6 +43,16 @@ export const messageStore = defineStore(
                         await this.syncMessagePage(timeStamp, pageSize)
                     }
                 })
+            },
+            async fetchMessages(conversationId: string) {
+                console.log('Fetching messages')
+                let messages = this.messageMap.get(conversationId)
+                if (messages){
+                    return messages
+                }
+                messages = await window.api.getMessagesByConversationId(conversationId) as Message[]
+                messages.reverse()
+                this.messageMap.set(conversationId, messages)
             }
         }
     })

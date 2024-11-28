@@ -21,3 +21,92 @@
 
 .full-width
   width: 100%
+
+.full-height
+  height: 100%
+
+
+
+$directions: row, row-reverse, column, column-reverse
+$wraps: nowrap, wrap, wrap-reverse
+$justifyContents: flex-start, flex-end, center, space-between, space-around
+$alignItems: flex-start, flex-end, center, baseline, stretch
+$alignContents: flex-start, flex-end, center, space-between, space-around, stretch
+
+$alignSelfs: auto, flex-start, flex-end, center, baseline, stretch
+.flex
+  display: flex
+  display: -webkit-flex
+  display: -moz-box
+  display: -ms-flexbox
+
+  // flex-direction
+  &_d
+    @each $var in $directions
+      &-#{$var}
+        @extend .flex
+        flex-direction: #{$var}
+
+  // flex-wrap
+  &_w
+    @each $var in $wraps
+      &-#{$var}
+        @extend .flex
+        flex-wrap: #{$var}
+
+  // justify-content
+  &_j_c
+    @each $var in $justifyContents
+      &-#{$var}
+        @extend .flex
+        justify-content: #{$var}
+      &_a_i-#{$var}
+        @extend .flex
+        justify-content: #{$var}
+        align-items: #{$var}
+
+  // align-items
+  &_a_i
+    @each $var in $alignItems
+      &-#{$var}
+        @extend .flex
+        align-items: #{$var}
+
+  // align-content
+  &_a_c
+    @each $var in $alignContents
+      &-#{$var}
+        @extend .flex
+        align-content: #{$var}
+
+  // todo: 子元素属性
+  &-item
+    // order
+    @for $i from -20 to 20
+      &_o-#{$i}
+        order: #{$i}
+
+
+    // flex: flex-grow flex-shrink flex-basis
+    &_f-a
+      flex: auto
+
+    &_f-n
+      flex: none
+
+    @for $i from 0 to 10
+      &_f-#{$i}
+        flex: #{$i}
+
+    // @for $j from 1 to 10 {
+    //   @for $k from 1 to 10 {
+    //     &_f-#{$i}-#{$j}-#{$k} {
+    //       flex: #{&i} #{&j} #{&k};
+    //     }
+    //   }
+    // }
+
+    // align-self
+    @each $var in $alignSelfs
+      &_a_s-#{$var}
+        align-self: #{$var}

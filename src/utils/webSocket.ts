@@ -39,7 +39,6 @@ export default  class  WebSocketClass{
         this.ws.onmessage = (e) => {
             if (typeof e.data === "string") {
                 const message = JSON.parse(e.data)
-                console.log('WebSocket 收到消息', message);
                 this.callback(message)
             }
         }

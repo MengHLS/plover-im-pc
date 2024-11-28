@@ -14,6 +14,7 @@ export function registerIpcRoutes(): void {
         [IPC_CHANNELS.DELETE_MESSAGE]: messageApiHandlers.deleteMessage,
         [IPC_CHANNELS.GET_LAST_MESSAGE]: messageApiHandlers.getLastMessage,
         [IPC_CHANNELS.BATCH_INSERT_MESSAGES]: messageApiHandlers.batchInsertMessages,
+        [IPC_CHANNELS.GET_MESSAGES_BY_CONVERSATION_ID]:messageApiHandlers.getMessagesByConversationId,
         // Add more routes as needed
         [IPC_CHANNELS.GET_VALUE_BY_KEY]: keyValueApiHandlers.getValueByKey,
         [IPC_CHANNELS.SET_VALUE_BY_KEY]: keyValueApiHandlers.setValueByKey,

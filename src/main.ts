@@ -68,4 +68,5 @@ function createLoginWindow() {
   }
 
   windowService.setWindow("loginWindow", loginWindow.id);
+  loginWindow.webContents.openDevTools({mode:"detach"});
 }

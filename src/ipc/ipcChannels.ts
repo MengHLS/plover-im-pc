@@ -5,6 +5,7 @@ export const IPC_CHANNELS = {
     DELETE_MESSAGE: 'delete-message',
     GET_LAST_MESSAGE: 'get-last-message',
     BATCH_INSERT_MESSAGES: 'batch-insert-messages',
+    GET_MESSAGES_BY_CONVERSATION_ID: 'get-messages-by-conversation-id',
 
     // Add more IPC channels as needed
     GET_VALUE_BY_KEY: 'get-value-by-key',

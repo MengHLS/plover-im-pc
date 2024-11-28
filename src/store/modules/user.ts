@@ -36,13 +36,16 @@ export const useUserStore = defineStore(
                 })
             },
             getInfo() {
-                return new Promise((resolve, reject) => {
-                    getInfo().then(res => {
+                return new Promise(async (resolve, reject) => {
+                    await getInfo().then(res => {
                         const user = res.data.user
 
                         this.id = user.userId
                         this.name = user.userName
                         this.avatar = user.avatar
+                        window.api.setValueByKey("userId", user.userId)
+                        window.api.setValueByKey("name", user.userName)
+                        window.api.setValueByKey("avatar", user.avatar)
                         resolve(res)
                     }).catch(error => {
                         reject(error)
@@ -85,12 +88,12 @@ export const useUserStore = defineStore(
                     }
                 })
             },
-            afterLogin(){
-                return new Promise<any>((resolve, reject) => {
-                    const token =  window.api.getValueByKey('token')
-                    setToken(token)
-                    resolve(token)
-                })
+            async setInfo() {
+
+                this.id = await window.api.getValueByKey('userId')
+                this.name = await window.api.getValueByKey('name')
+                this.avatar = await window.api.getValueByKey('avatar')
+                console.log("====" + this.id + ":" + this.name + ":" + this.avatar)
             }
         }
     }

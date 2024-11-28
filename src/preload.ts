@@ -13,6 +13,7 @@ contextBridge.exposeInMainWorld('api', {
     setValueByKey: (key: string, value: string) => ipcRenderer.invoke('set-value-by-key', key, value),
     deleteValueByKey: (key: string) => ipcRenderer.invoke('delete-value-by-key', key),
     getAllConversations: (userId: string) => ipcRenderer.invoke('get-all-conversations', userId),
+    getMessagesByConversationId:(conversationId:string) => ipcRenderer.invoke("get-messages-by-conversation-id", conversationId),
 
     loginSuccess: () => ipcRenderer.invoke('login-success'),
 

@@ -1,6 +1,6 @@
 // src/services/MessageService.ts
-import { DatabaseUtil } from '@/db/DatabaseUtil';
-import { Message } from '@/models/Message';
+import {DatabaseUtil} from '@/db/DatabaseUtil';
+import {Message} from '@/models/Message';
 
 export const messageService = {
     // 获取所有消息
@@ -28,9 +28,10 @@ export const messageService = {
     addMessage: async (message: Message) => {
         const db = DatabaseUtil.getInstance().getDatabase();
         const query = `
-      INSERT INTO messages (id, type, content, sender_id, sender_name, sender_type, receiver_id, receiver_name, receiver_type, create_time, time_stamp) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
+            INSERT INTO messages (id, type, content, sender_id, sender_name, sender_type, receiver_id, receiver_name,
+                                  receiver_type, create_time, time_stamp)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
         db.prepare(query).run(
             message.id,
             message.type,
@@ -69,7 +70,7 @@ export const messageService = {
         };
         if (result) {
             return new Message(
-                result.id ,
+                result.id,
                 result.type,
                 result.content,
                 result.sender_id,
@@ -89,9 +90,10 @@ export const messageService = {
     batchInsertMessages: async (messages: Message[]) => {
         const db = DatabaseUtil.getInstance().getDatabase();
         const query = `
-      INSERT INTO messages (id, type, content, sender_id, sender_name, sender_type, receiver_id, receiver_name, receiver_type, create_time, time_stamp) 
-      VALUES (?,?,?,?,?,?,?,?,?,?,?)
-    `;
+            INSERT INTO messages (id, type, content, sender_id, sender_name, sender_type, receiver_id, receiver_name,
+                                  receiver_type, create_time, time_stamp)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
         const stmt = db.prepare(query);
         messages.forEach(message => {
             stmt.run(
@@ -108,6 +110,37 @@ export const messageService = {
                 message.timeStamp
             );
         });
+    },
+    getMessagesByConversationId: (id: string) => {
+        const db = DatabaseUtil.getInstance().getDatabase();
+        const result = db.prepare('SELECT * FROM messages WHERE receiver_id =? OR sender_id =? ORDER BY time_stamp DESC').all([id, id]) as {
+            id: string;
+            type: number;
+            content: string;
+            sender_id: string;
+            sender_name: string;
+            sender_type: number;
+            receiver_id: string;
+            receiver_name: string;
+            receiver_type: number;
+            create_time: string;
+            time_stamp: number;
+        }[];
+        return result.map(
+            (row: any) => new Message(
+                row.id,
+                row.type,
+                row.content,
+                row.sender_id,
+                row.sender_name,
+                row.sender_type,
+                row.receiver_id,
+                row.receiver_name,
+                row.receiver_type,
+                row.create_time,
+                row.time_stamp
+            )
+        )
     }
 };
 
@@ -116,5 +149,6 @@ export const messageApiHandlers = {
     addMessage: messageService.addMessage,
     deleteMessage: messageService.deleteMessage,
     getLastMessage: messageService.getLastMessage,
-    batchInsertMessages: messageService.batchInsertMessages
+    batchInsertMessages: messageService.batchInsertMessages,
+    getMessagesByConversationId: messageService.getMessagesByConversationId
 }

@@ -21,8 +21,8 @@ export const conversationService = {
                                    from messages
                                    where receiver_type = 0
                                    group by conversation_id
-                                   order by time_stamp desc`).all(userId, userId);
-        return result.map((row: any) => new Conversation(row.name, row.content, row.time_stamp, row.receiverType, row.conversation_id, row.create_time));
+                                   order by time_stamp desc`).all(userId.toString(), userId.toString());
+        return result.map((row: any) => new Conversation(row.name, row.content, row.time_stamp, row.receiverType, row.conversation_id, row.create_time, null));
     },
     deleteConversation: (conversationId: string) => {
 

@@ -7,7 +7,7 @@ export interface IElectronAPI {
     getLastMessage: () => Promise<Message>,
     batchInsertMessages: (messages: any[]) => Promise<void>,
 
-    getValueByKey: (key: string) => string,
+    getValueByKey: (key: string) => Promise<string>,
     setValueByKey: (key: string, value: string) => Promise<void>,
     deleteValueByKey: (key: string) => Promise<void>
 
@@ -19,6 +19,7 @@ export interface IElectronAPI {
     send: (data: any) => Promise<void>
     close: () => Promise<void>
     onReceiveMessage: (callback:GenericCallbackWithReturn< SocketDTO>) => void
+    getMessagesByConversationId: (conversationId: string) => Promise<Message[]>
 }
 
 declare global {

@@ -3,16 +3,19 @@ import {SocketDTO} from "@/models/SocketDTO";
 import {ACTION_TYPE} from "@/utils/enums/ActionType";
 import {Message} from "@/models/Message";
 import {Conversation} from "@/models/Conversation";
-
+import {reactive} from "vue";
+import {useUserStore} from "@/store/modules/user";
 
 export const useConversationStore = defineStore('conversation', {
     state: () => ({
-        conversations: [],
+        conversations: reactive([]),
+        active: Conversation
     }),
     actions: {
         async syncConversations() {
-            // 获取数据库中所有
-            const conversations = await window.api.getAllConversations('userId')
+            // 获取数据库中所有会话
+            const userStore = useUserStore()
+            const conversations = await window.api.getAllConversations(userStore.id)
             conversations.forEach( conversation => this.conversations.push(conversation))
             return conversations
         },
@@ -24,6 +27,9 @@ export const useConversationStore = defineStore('conversation', {
 
                 }
             }
-        }
+        },
+        setActive(value:Conversation){
+            this.active = value
+        },
     },
 })

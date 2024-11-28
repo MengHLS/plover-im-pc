@@ -1,17 +1,16 @@
 <template>
-  <div class="container">
-    <el-container class="container">
-      <el-aside class="conversation">
+  <div class="container full-height">
+    <el-container class="container full-height full-width">
+      <el-aside class="conversation full-height">
         <div class="search">搜索栏</div>
         <div class="conversation-list">
           <div v-for="item in conversationList">
-
-            <ConversationCard :conversation="item" :key="item.conversationId"></ConversationCard>
+            <ConversationCard :conversation="item" :key="item.conversationId" ></ConversationCard>
           </div>
         </div>
       </el-aside>
-      <el-main>
-
+      <el-main class="main full-height">
+        <MessagePanel></MessagePanel>
       </el-main>
     </el-container>
   </div>
@@ -19,6 +18,7 @@
 
 <script lang="ts" setup>
 import ConversationCard from "./components/conversation-card/index.vue";
+import MessagePanel from "./components/message-panel/index.vue";
 import {useConversationStore} from "@/store/modules/conversation";
 import {computed} from "vue";
 
@@ -30,7 +30,6 @@ const conversationStore = useConversationStore()
 
 const conversationList = computed(() => conversationStore.conversations)
 
-conversationStore.syncConversations()
 
 
 </script>
@@ -39,11 +38,8 @@ conversationStore.syncConversations()
 .container
   margin: 0
   padding: 0
-  height: 100vh
-  width: 24rem
 
   .conversation
-    background-color: #1b1b1b
     width: 24rem
 
     .search
@@ -52,4 +48,6 @@ conversationStore.syncConversations()
 
     .conversation-list
       width: 100%
+  .main
+    padding: 0
 </style>

@@ -4,17 +4,16 @@ export const keyValueService = {
 
     setValueByKey:async (key: string, value: string) => {
         const db = DatabaseUtil.getInstance().getDatabase();
-        db.prepare('INSERT OR REPLACE INTO key_value_store (id, value) VALUES (?,?)').run(key, value);
+        db.prepare('INSERT OR REPLACE INTO key_value_store (id, value) VALUES (?,?)').run(key.toString(), value.toString());
     },
     getValueByKey: (key: string) => {
         const db = DatabaseUtil.getInstance().getDatabase();
-        const result = db.prepare('SELECT value FROM key_value_store WHERE id =?').get(key) as{value: string | null}
-        console.log(result)
+        const result = db.prepare('SELECT value FROM key_value_store WHERE id =?').get(key.toString()) as{value: string | null}
         return result? result.value : null;
     },
     deleteValueByKey: async (key: string) => {
         const db = DatabaseUtil.getInstance().getDatabase();
-        db.prepare('DELETE FROM key_value_store WHERE id =?').run(key);
+        db.prepare('DELETE FROM key_value_store WHERE id =?').run(key.toString());
     }
 }
 

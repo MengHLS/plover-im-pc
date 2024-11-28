@@ -89,7 +89,6 @@ const loginRules = {
 
 const userStore = useUserStore();
 userStore.auth().then(() => {
-  console.log("执行登录操作================================")
   window.api.loginSuccess()
 }).catch(() => {
   //查询记住的用户名
@@ -98,9 +97,13 @@ userStore.auth().then(() => {
 
 function handleLogin() {
   userStore.login(userInfo.value).then(() => {
-    // 跳转到首页
-    // 创建主窗口
-    window.api.loginSuccess()
+    //获取用户信息
+    userStore.getInfo().then(() => {
+
+      // 跳转到首页
+      // 创建主窗口
+      window.api.loginSuccess()
+    })
   })
 }
 function getCode() {

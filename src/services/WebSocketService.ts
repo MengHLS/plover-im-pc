@@ -8,7 +8,7 @@ export const webSocketService = {
 
     init(data: any): void {
         const url = getWebsocketOrigin();
-        console.log("ws地址========="+ url)
+        mainWindow = windowService.getWindow("mainWindow")
         webSocket = new WebSocketClass(url, (response: SocketDTO)=>{
             if (response && response.action === ACTION_TYPE.HEARTBEAT) {
                 return
@@ -19,9 +19,6 @@ export const webSocketService = {
                 return;
             }
             if (response && response.action === ACTION_TYPE.PRIVATE_CHAT_MESSAGE){
-                // rootStore.onReceiveMessage(data)
-                const mainWindow = windowService.getWindow("mainWindow")
-                console.log("主窗口对象"+ mainWindow)
                 mainWindow.webContents.send("socket_message", response)
                 return;
             }
@@ -47,7 +44,7 @@ export const webSocketApiHandler={
 }
 
 
-
+let mainWindow:BrowserWindow = null
 let webSocket:WebSocketClass = null
 /**
  * 获取websock链接地址
