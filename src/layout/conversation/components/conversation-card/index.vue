@@ -75,7 +75,7 @@ setAvatar()
   width: calc(100% - 1rem)
 
   &:hover
-    background-color: #393939
+    background-color: #E7E7E7
 
   .content
     margin: 0.5rem 0.5rem 0.5rem 0

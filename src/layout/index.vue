@@ -67,7 +67,7 @@ $size: 43px
   .aside
     padding: 0.5rem
     width: 4rem
-
+    background-color: green
     .aside-button
       margin: 0.5rem 0
       padding: 0.5rem 0

@@ -41,7 +41,7 @@ const conversationList = computed(() => conversationStore.conversations)
 
   .conversation
     width: 24rem
-
+    background-color: #FFFFFF
     .search
       height: 3rem
       padding: 0.5rem .5rem .5rem .5rem

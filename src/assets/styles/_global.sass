@@ -16,15 +16,65 @@
 
 .center-flex
   display: flex
-  justify-content: center /* 水平居中 */
-  align-items: center /* 垂直居中 */
+  justify-content: center
+  /* 水平居中 */
+  align-items: center
+/* 垂直居中 */
 
 .full-width
   width: 100%
 
 .full-height
   height: 100%
+// 外边框
+@for $i from 0 through 200
+  .margin-#{$i}
+    margin: #{$i}px
 
+  .margin-#{$i}-a
+    margin: #{$i}px auto
+
+  .margin-#{$i}-n
+    margin: #{$i}px 0px
+
+  .margin-n-#{$i}
+    margin: 0 #{$i}px
+
+  .margin_t-#{$i}
+    margin-top: #{$i}px
+
+  .margin_r-#{$i}
+    margin-right: #{$i}px
+
+  .margin_b-#{$i}
+    margin-bottom: #{$i}px
+
+  .margin_l-#{$i}
+    margin-left: #{$i}px
+
+
+// 内边框
+@for $i from 1 through 200
+  .padding-#{$i}
+    padding: #{$i}px
+
+  .padding-#{$i}-n
+    padding: #{$i}px 0px
+
+  .padding-n-#{$i}
+    padding: 0 #{$i}px
+
+  .padding_t-#{$i}
+    padding-top: #{$i}px
+
+  .padding_r-#{$i}
+    padding-right: #{$i}px
+
+  .padding_b-#{$i}
+    padding-bottom: #{$i}px
+
+  .padding_l-#{$i}
+    padding-left: #{$i}px
 
 
 $directions: row, row-reverse, column, column-reverse
