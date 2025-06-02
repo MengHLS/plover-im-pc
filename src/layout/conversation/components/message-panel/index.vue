@@ -96,8 +96,10 @@ const scrollHandle = async (scroll: any) => {
  * 滚动条滚动到底部
  */
 const scrollToBottom = () => {
-  const scrollTop = refInner.value.clientHeight - refScrollbar.value.wrapRef.clientHeight
-  refScrollbar.value.setScrollTop(scrollTop)
+  if (refInner.value) {
+    const scrollTop = refInner.value.clientHeight - refScrollbar.value.wrapRef.clientHeight
+    refScrollbar.value.setScrollTop(scrollTop)
+  }
 }
 onActivated(() => {
 
